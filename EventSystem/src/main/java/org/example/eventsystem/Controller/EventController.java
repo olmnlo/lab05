@@ -61,10 +61,10 @@ public class EventController {
 
 
     @GetMapping("/find/id/{id}")
-    public ApiResponse findEventById(@PathVariable String id) {
+    public Object findEventById(@PathVariable String id) {
         for (Event e : events) {
             if(e.getId().equalsIgnoreCase(id)){
-                return new ApiResponse("Event found successfully "+ e);
+                return e;
             }
         }
 
