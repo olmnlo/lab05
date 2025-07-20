@@ -26,23 +26,35 @@ public class TrackerController {
 
     @PutMapping("/update/{index}")
     public ApiResponse updateProject(@RequestBody Project project, @PathVariable int index){
-        projects.set(index, project);
-        return new ApiResponse("project successfully updated");
+        if(index < projects.size()) {
+            projects.set(index, project);
+            return new ApiResponse("project successfully updated");
+        }else {
+            return new ApiResponse("project not found");
+        }
     }
 
     @DeleteMapping("/delete/{index}")
     public ApiResponse deleteProject(@PathVariable int index){
-        projects.remove(index);
-        return new ApiResponse("project successfully deleted");
+        if(index < projects.size()) {
+            projects.remove(index);
+            return new ApiResponse("project successfully deleted");
+        }else  {
+            return new ApiResponse("project not found");
+        }
     }
 
     @PutMapping("/update-status/{index}")
     public ApiResponse updateProjectStatus(@PathVariable int index){
-        if(projects.get(index).isStatus()){
-            return new ApiResponse("project status already done");
-        }else {
-            projects.get(index).setStatus(true);
-            return new ApiResponse("project status updated done");
+        if(index < projects.size()) {
+            if (projects.get(index).isStatus()) {
+                return new ApiResponse("project status already done");
+            } else {
+                projects.get(index).setStatus(true);
+                return new ApiResponse("project status updated done");
+            }
+        }else{
+            return new ApiResponse("project not found");
         }
     }
 

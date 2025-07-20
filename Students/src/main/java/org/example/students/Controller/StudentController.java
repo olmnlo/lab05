@@ -28,24 +28,36 @@ public class StudentController {
 
     @PutMapping("/update/{index}")
     public ApiResponse updateStudent(@RequestBody Student student, @PathVariable int index){
-        students.set(index, student);
-        return new ApiResponse("student successfully updated");
+        if (index < students.size()) {
+            students.set(index, student);
+            return new ApiResponse("student successfully updated");
+        }else {
+            return new ApiResponse("student not found");
+        }
     }
 
     @DeleteMapping("/delete/{index}")
     public ApiResponse deleteStudent(@PathVariable int index){
-        students.remove(index);
-        return new ApiResponse("student successfully deleted");
+        if (index < students.size()) {
+            students.remove(index);
+            return new ApiResponse("student successfully deleted");
+        }else  {
+            return new ApiResponse("student not found");
+        }
     }
 
     @GetMapping("/honors/{index}")
     public ApiResponse getStudentBasedOnGPA(@PathVariable int index){
-        if(students.get(index).getGPA() >= 4.5){
-            return  new ApiResponse("student: "+ students.get(index) + " is first class");
-        }else if(students.get(index).getGPA() > 3.5){
-            return  new ApiResponse("student: "+ students.get(index) + " is second class");
-        }else {
-            return  new ApiResponse("student: "+ students.get(index) + " is not have honor class");
+        if (index < students.size()) {
+            if (students.get(index).getGPA() >= 4.5) {
+                return new ApiResponse("student: " + students.get(index).getName() + " is first class");
+            } else if (students.get(index).getGPA() >= 3.5) {
+                return new ApiResponse("student: " + students.get(index).getName() + " is second class");
+            } else {
+                return new ApiResponse("student: " + students.get(index).getName() + " is not have honor class");
+            }
+        }else  {
+            return new ApiResponse("student not found");
         }
     }
 

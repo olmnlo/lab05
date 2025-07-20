@@ -31,20 +31,32 @@ public class EventController {
 
     @PutMapping("/update/{index}")
     public ApiResponse updateEvent(@RequestBody Event event, @PathVariable int index) {
-        events.set(index, event);
-        return new ApiResponse("Event updated successfully");
+        if (index < events.size()) {
+            events.set(index, event);
+            return new ApiResponse("Event updated successfully");
+        }else {
+            return new ApiResponse("There is no event with index " + index);
+        }
     }
 
     @DeleteMapping("/delete/{index}")
     public ApiResponse deleteEvent(@PathVariable int index) {
-        events.remove(index);
-        return new ApiResponse("Event deleted successfully");
+        if (index < events.size()) {
+            events.remove(index);
+            return new ApiResponse("Event deleted successfully");
+        }else  {
+            return new ApiResponse("There is no event with index " + index);
+        }
     }
 
     @PutMapping("/update/capacity/{capacity}/index/{index}")
     public ApiResponse updateCapacity(@PathVariable int capacity,@PathVariable int index) {
-        events.get(index).setCapacity(capacity);
-        return new ApiResponse("Event capacity updated successfully");
+        if (index < events.size()) {
+            events.get(index).setCapacity(capacity);
+            return new ApiResponse("Event capacity updated successfully");
+        }else {
+            return new ApiResponse("There is no event with index " + index);
+        }
     }
 
 
