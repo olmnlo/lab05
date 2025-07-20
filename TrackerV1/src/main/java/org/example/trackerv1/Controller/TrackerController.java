@@ -15,6 +15,7 @@ public class TrackerController {
 
     @PostMapping("/create")
     public ApiResponse create(@RequestBody Project project){
+        project.setId(projects.size());
         projects.add(project);
         return new ApiResponse("project successfully created");
     }
@@ -27,6 +28,7 @@ public class TrackerController {
     @PutMapping("/update/{index}")
     public ApiResponse updateProject(@RequestBody Project project, @PathVariable int index){
         if(index < projects.size()) {
+            project.setId(projects.get(index).getId());
             projects.set(index, project);
             return new ApiResponse("project successfully updated");
         }else {
@@ -38,6 +40,9 @@ public class TrackerController {
     public ApiResponse deleteProject(@PathVariable int index){
         if(index < projects.size()) {
             projects.remove(index);
+            for (int i = index; i < projects.size(); i++) {
+                projects.get(i).setId(projects.get(i).getId()-1);
+            }
             return new ApiResponse("project successfully deleted");
         }else  {
             return new ApiResponse("project not found");

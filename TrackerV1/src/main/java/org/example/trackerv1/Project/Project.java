@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Project {
 
     //: ID , title , description , status, companyName
-    private String id;
+    private int id;
     private String title;
     private String description;
     private boolean status;

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 public class Event {
     //: ID , description , capacity, startDate , endDate
-    private String id;
+    private int id;
     private String description;
     private int capacity;
     @JsonFormat(pattern="yyyy-MM-dd")

@@ -25,6 +25,7 @@ public class EventController {
                 return new ApiResponse("there is already an event with the same start date and end date");
             }
         }
+        event.setId(events.size());
         events.add(event);
         return new ApiResponse("Event added successfully");
     }
@@ -32,6 +33,7 @@ public class EventController {
     @PutMapping("/update/{index}")
     public ApiResponse updateEvent(@RequestBody Event event, @PathVariable int index) {
         if (index < events.size()) {
+            event.setId(events.get(index).getId());
             events.set(index, event);
             return new ApiResponse("Event updated successfully");
         }else {
@@ -43,6 +45,9 @@ public class EventController {
     public ApiResponse deleteEvent(@PathVariable int index) {
         if (index < events.size()) {
             events.remove(index);
+            for (int i = index; i < events.size(); i++) {
+                events.get(i).setId(events.get(i).getId()-1);
+            }
             return new ApiResponse("Event deleted successfully");
         }else  {
             return new ApiResponse("There is no event with index " + index);
@@ -61,9 +66,9 @@ public class EventController {
 
 
     @GetMapping("/find/id/{id}")
-    public Object findEventById(@PathVariable String id) {
+    public Object findEventById(@PathVariable int id) {
         for (Event e : events) {
-            if(e.getId().equalsIgnoreCase(id)){
+            if(e.getId() == id){
                 return e;
             }
         }

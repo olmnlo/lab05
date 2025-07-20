@@ -21,6 +21,7 @@ public class StudentController {
 
     @PostMapping("/create")
     public ApiResponse createStudent(@RequestBody Student student){
+        student.setID(students.size());
         students.add(student);
         return new ApiResponse("student successfully created");
     }
@@ -29,6 +30,7 @@ public class StudentController {
     @PutMapping("/update/{index}")
     public ApiResponse updateStudent(@RequestBody Student student, @PathVariable int index){
         if (index < students.size()) {
+            student.setID(students.get(index).getID());
             students.set(index, student);
             return new ApiResponse("student successfully updated");
         }else {
@@ -40,6 +42,9 @@ public class StudentController {
     public ApiResponse deleteStudent(@PathVariable int index){
         if (index < students.size()) {
             students.remove(index);
+            for (int i = index; i < students.size() ; i++) {
+                students.get(i).setID(students.get(i).getID()-1);
+            }
             return new ApiResponse("student successfully deleted");
         }else  {
             return new ApiResponse("student not found");

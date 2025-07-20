@@ -13,7 +13,7 @@ import lombok.Setter;
 public class Student {
 
     //ID, name, age, degree, GPA.
-    private String ID;
+    private int ID;
     private String name;
     private String age;
     private String degree;
