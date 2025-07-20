@@ -38,20 +38,20 @@ public class TrackerController {
 
     @PutMapping("/update-status/{index}")
     public ApiResponse updateProjectStatus(@PathVariable int index){
-        if(projects.get(index).getStatus().equalsIgnoreCase("done")){
-            projects.get(index).setStatus("not done");
+        if(projects.get(index).isStatus()){
+            return new ApiResponse("project status already done");
         }else {
-            projects.get(index).setStatus("done");
+            projects.get(index).setStatus(true);
+            return new ApiResponse("project status updated done");
         }
-        return new ApiResponse("project successfully updated");
     }
 
 
     @GetMapping("/find/title/{title}")
-    public ApiResponse getProjectByTitle(@PathVariable String title){
+    public Object getProjectByTitle(@PathVariable String title){
         for(Project project : projects){
             if(project.getTitle().equalsIgnoreCase(title)){
-                return new ApiResponse("project is found"+ project);
+                return project;
             }
         }
         return new ApiResponse("project not found");

@@ -1,17 +1,14 @@
-package org.example.trackerv1.ApiResponse;
+package org.example.eventsystem.Api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.trackerv1.Project.Project;
 
 @Data
 @AllArgsConstructor
 @Getter
 @Setter
-
 public class ApiResponse {
-
     private String message;
 }

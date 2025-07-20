@@ -38,18 +38,15 @@ public class StudentController {
         return new ApiResponse("student successfully deleted");
     }
 
-    @GetMapping("/honors")
-    public HashMap<Student, String> getStudentBasedOnGPA(){
-        HashMap<Student, String> categories = new HashMap<>();
-
-        for (Student student : students){
-            if(student.getGPA() >= 4.5){
-                categories.put(student, "first class honor");
-            }else if(student.getGPA() > 3.5){
-                categories.put(student, "second class honor");
-            }
+    @GetMapping("/honors/{index}")
+    public ApiResponse getStudentBasedOnGPA(@PathVariable int index){
+        if(students.get(index).getGPA() >= 4.5){
+            return  new ApiResponse("student: "+ students.get(index) + " is first class");
+        }else if(students.get(index).getGPA() > 3.5){
+            return  new ApiResponse("student: "+ students.get(index) + " is second class");
+        }else {
+            return  new ApiResponse("student: "+ students.get(index) + " is not have honor class");
         }
-        return categories;
     }
 
 

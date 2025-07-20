@@ -15,6 +15,6 @@ public class Project {
     private String id;
     private String title;
     private String description;
-    private String status;
+    private boolean status;
     private String companyName;
 }
